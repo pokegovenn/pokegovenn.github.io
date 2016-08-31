@@ -5,25 +5,6 @@ var drawColor = "Green";
 var allMarkers = [];
 var allCircles = [];
 
-// First, create an object containing LatLng and population for each city.
-var citymap = {
-  chicago: {
-    center: {lat: 41.878, lng: -87.629},
-    population: 2714856
-  },
-  newyork: {
-    center: {lat: 40.714, lng: -74.005},
-    population: 8405837
-  },
-  losangeles: {
-    center: {lat: 34.052, lng: -118.243},
-    population: 3857799
-  },
-  vancouver: {
-    center: {lat: 49.25, lng: -123.1},
-    population: 603502
-  }
-};
 
 // ============== CREATING BUTTONS ============
 
@@ -119,7 +100,14 @@ function CenterControlBtnUndo(controlDiv, map) {
 
   // Setup the click event listeners: simply set the map to Chicago.
   controlUI.addEventListener('click', function() {
-    drawColor = "Red";
+    if (allMarkers.length > 0) {
+      var lastMarker = allMarkers.pop();
+      var lastCircle = allCircles.pop();
+      lastMarker.setMap(null);
+      lastCircle.setMap(null);
+    } else {
+      // Do nothing
+    }
   });
 }
 
