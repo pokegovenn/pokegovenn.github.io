@@ -149,13 +149,16 @@ function initMap() {
   });
 
   function placeMarker(location) {
-      var imageGrn = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+      var imageGrn = "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
       var imageRed = "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
       var image = null;
+      var fillColor = null;
       if (drawColor == "Green") {
         image = imageGrn;
+        fillColor = "#00FF00";
       } else {
         image = imageRed;
+        fillColor = "#FF0000";
       } 
 
       var marker = new google.maps.Marker({
@@ -163,6 +166,19 @@ function initMap() {
           map: map,
           icon: image
       });
+
+
+      var cityCircle = new google.maps.Circle({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.0,
+        strokeWeight: 0,
+        fillColor: fillColor,
+        fillOpacity: 0.1,
+        map: map,
+        center: location,
+        radius: 200
+      });
+
   }
 
 
