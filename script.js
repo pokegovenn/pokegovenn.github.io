@@ -154,7 +154,7 @@ function CenterControlBtnLocate(controlDiv, map) {
           loc_marker.setMap(null);
         }
         var marker = new google.maps.Marker({
-            position: location, 
+            position: pos,
             map: map,
             icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
             clickable: false
