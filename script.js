@@ -176,7 +176,8 @@ function initMap() {
         fillOpacity: 0.1,
         map: map,
         center: location,
-        radius: 200
+        radius: 200,
+        clickable: false
       });
 
   }
