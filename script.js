@@ -21,17 +21,6 @@
         }
       };
 
-      // does this work
-      google.maps.event.addListener(map, 'click', function(event) {
-         placeMarker(event.latLng);
-      });
-
-      function placeMarker(location) {
-          var marker = new google.maps.Marker({
-              position: location, 
-              map: map
-          });
-      }
 
 
       function initMap() {
@@ -77,5 +66,19 @@
             radius: Math.sqrt(citymap[city].population) * 100
           });
         }
+
+        // does this work
+        google.maps.event.addListener(map, 'click', function(event) {
+           placeMarker(event.latLng);
+        });
+
+        function placeMarker(location) {
+            var marker = new google.maps.Marker({
+                position: location, 
+                map: map
+            });
+        }
+
+
       }
 
