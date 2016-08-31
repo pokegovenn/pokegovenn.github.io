@@ -4,6 +4,7 @@ var drawColor = "Green";
 
 var allMarkers = [];
 var allCircles = [];
+var loc_marker = null;
 
 
 // ============== CREATING BUTTONS ============
@@ -111,6 +112,65 @@ function CenterControlBtnUndo(controlDiv, map) {
   });
 }
 
+// function to create Locate button
+function CenterControlBtnLocate(controlDiv, map) {
+
+  // Set CSS for the control border.
+  var controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = '#fff';
+  controlUI.style.border = '2px solid #fff';
+  controlUI.style.borderRadius = '3px';
+  controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.marginBottom = '10px';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Click to recenter the map';
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  var controlText = document.createElement('div');
+  controlText.style.color = 'rgb(25,25,25)';
+  controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+  controlText.style.fontSize = '12px';
+  controlText.style.lineHeight = '38px';
+  controlText.style.paddingLeft = '5px';
+  controlText.style.paddingRight = '5px';
+  controlText.innerHTML = 'Where am I?';
+  controlUI.appendChild(controlText);
+
+  // Setup the click event listeners: simply set the map to Chicago.
+  controlUI.addEventListener('click', function() {
+
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log("HEY");
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        map.setCenter(pos);
+        if (loc_marker != null) {
+          loc_marker.setMap(null);
+        }
+        var marker = new google.maps.Marker({
+            position: location, 
+            map: map,
+            icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            clickable: false
+        });
+        loc_marker = marker;
+      }, function() {
+        // handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      // DO NOTHING LMFAO
+    }
+
+  });
+}
+
 
 function initMap() {
   // Create the map.
@@ -127,6 +187,7 @@ function initMap() {
   var centerControlGreen = new CenterControlBtnGreen(centerControlDiv, map);
   var centerControlRed = new CenterControlBtnRed(centerControlDiv, map);
   var centerControlUndo = new CenterControlBtnUndo(centerControlDiv, map);
+  var centerControlLocate = new CenterControlBtnLocate(centerControlDiv, map);
 
   centerControlDiv.index = 1;
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
