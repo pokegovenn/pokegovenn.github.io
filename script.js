@@ -138,6 +138,7 @@ function initMap() {
   var centerControlDiv = document.createElement('div');
   var centerControlGreen = new CenterControlBtnGreen(centerControlDiv, map);
   var centerControlRed = new CenterControlBtnRed(centerControlDiv, map);
+  var centerControlUndo = new CenterControlBtnUndo(centerControlDiv, map);
 
   centerControlDiv.index = 1;
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
