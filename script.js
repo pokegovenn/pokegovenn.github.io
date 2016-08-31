@@ -52,7 +52,7 @@ function CenterControlBtnGreen(controlDiv, map) {
 
   // Setup the click event listeners: simply set the map to Chicago.
   controlUI.addEventListener('click', function() {
-    map.setCenter({lat: 41.85, lng: -87.65});
+    drawColor = "Green";
   });
 }
 
@@ -84,7 +84,7 @@ function CenterControlBtnRed(controlDiv, map) {
 
   // Setup the click event listeners: simply set the map to Chicago.
   controlUI.addEventListener('click', function() {
-    map.setCenter({lat: 41.85, lng: -87.65});
+    drawColor = "Red";
   });
 }
 
@@ -149,7 +149,14 @@ function initMap() {
   });
 
   function placeMarker(location) {
-  var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+      var imageGrn = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+      var imageRed = "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+      var image = null;
+      if (drawColor == "Green") {
+        image = imageGrn;
+      } else {
+        image = imageRed;
+      } 
 
       var marker = new google.maps.Marker({
           position: location, 
