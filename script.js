@@ -2,6 +2,9 @@
 
 var drawColor = "Green";
 
+var allMarkers = [];
+var allCircles = [];
+
 // First, create an object containing LatLng and population for each city.
 var citymap = {
   chicago: {
@@ -88,6 +91,38 @@ function CenterControlBtnRed(controlDiv, map) {
   });
 }
 
+// function to create Undo button
+function CenterControlBtnUndo(controlDiv, map) {
+
+  // Set CSS for the control border.
+  var controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = '#fff';
+  controlUI.style.border = '2px solid #fff';
+  controlUI.style.borderRadius = '3px';
+  controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.marginBottom = '10px';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Click to recenter the map';
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  var controlText = document.createElement('div');
+  controlText.style.color = 'rgb(25,25,25)';
+  controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+  controlText.style.fontSize = '12px';
+  controlText.style.lineHeight = '38px';
+  controlText.style.paddingLeft = '5px';
+  controlText.style.paddingRight = '5px';
+  controlText.innerHTML = 'Undo';
+  controlUI.appendChild(controlText);
+
+  // Setup the click event listeners: simply set the map to Chicago.
+  controlUI.addEventListener('click', function() {
+    drawColor = "Red";
+  });
+}
+
 
 function initMap() {
   // Create the map.
@@ -127,22 +162,6 @@ function initMap() {
     // DO NOTHING LMFAO
   }
 
-  // Construct the circle for each value in citymap.
-  // Note: We scale the area of the circle based on the population.
-  for (var city in citymap) {
-    // Add the circle for this city to the map.
-    var cityCircle = new google.maps.Circle({
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#FF0000',
-      fillOpacity: 0.35,
-      map: map,
-      center: citymap[city].center,
-      radius: Math.sqrt(citymap[city].population) * 100
-    });
-  }
-
   // does this work
   google.maps.event.addListener(map, 'click', function(event) {
      placeMarker(event.latLng);
@@ -167,18 +186,21 @@ function initMap() {
           icon: image
       });
 
+      allMarkers.push(marker);
 
-      var cityCircle = new google.maps.Circle({
+      var circle = new google.maps.Circle({
         strokeColor: '#FF0000',
         strokeOpacity: 0.0,
         strokeWeight: 0,
         fillColor: fillColor,
-        fillOpacity: 0.1,
+        fillOpacity: 0.2,
         map: map,
         center: location,
         radius: 200,
         clickable: false
       });
+
+      allCircles.push(circle);
 
   }
 
