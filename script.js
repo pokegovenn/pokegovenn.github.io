@@ -1,4 +1,5 @@
 // @AUTHOR: evanthebouncy@github
+// God don't look at this code lol this is speghetits at its finest ;) 0 abstraction
 
 var drawColor = "Green";
 
@@ -39,6 +40,24 @@ function CenterControlBtnGreen(controlDiv, map, placeMarker) {
   // Setup the click event listeners: simply set the map to Chicago.
   controlUI.addEventListener('click', function() {
     drawColor = "Green";
+
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log("HEY");
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      placeMarker(pos);
+    }, function() {
+      // handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    // DO NOTHING LMFAO
+  }
+
   });
 }
 
