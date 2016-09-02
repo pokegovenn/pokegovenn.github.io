@@ -70,6 +70,26 @@ function CenterControlBtnRed(controlDiv, map) {
   // Setup the click event listeners: simply set the map to Chicago.
   controlUI.addEventListener('click', function() {
     drawColor = "Red";
+
+
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log("HEY");
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      placeMarker(pos);
+    }, function() {
+      // handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    // DO NOTHING LMFAO
+  }
+
+
   });
 }
 
