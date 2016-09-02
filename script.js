@@ -11,7 +11,7 @@ var loc_marker = null;
 // ============== CREATING BUTTONS ============
 
 // function to create toggle green btn
-function CenterControlBtnGreen(controlDiv, map) {
+function CenterControlBtnGreen(controlDiv, map, placeMarker) {
 
   // Set CSS for the control border.
   var controlUI = document.createElement('div');
@@ -43,7 +43,7 @@ function CenterControlBtnGreen(controlDiv, map) {
 }
 
 // function to create toggle red btn
-function CenterControlBtnRed(controlDiv, map) {
+function CenterControlBtnRed(controlDiv, map, placeMarker) {
 
   // Set CSS for the control border.
   var controlUI = document.createElement('div');
@@ -201,43 +201,6 @@ function initMap() {
     mapTypeId: 'terrain'
   });
 
-  // Add buttons
-  // Create the DIV to hold the control and call the CenterControl()
-  // constructor passing in this DIV.
-  var centerControlDiv = document.createElement('div');
-  var centerControlGreen = new CenterControlBtnGreen(centerControlDiv, map);
-  var centerControlRed = new CenterControlBtnRed(centerControlDiv, map);
-  var centerControlUndo = new CenterControlBtnUndo(centerControlDiv, map);
-  var centerControlLocate = new CenterControlBtnLocate(centerControlDiv, map);
-
-  centerControlDiv.index = 1;
-  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
-
-  // Try HTML5 geolocation.
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      console.log("HEY");
-      var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-
-      // infoWindow.setPosition(pos);
-      // infoWindow.setContent('Location found.');
-      map.setCenter(pos);
-    }, function() {
-      // handleLocationError(true, infoWindow, map.getCenter());
-    });
-  } else {
-    // Browser doesn't support Geolocation
-    // DO NOTHING LMFAO
-  }
-
-  // does this work
-  google.maps.event.addListener(map, 'click', function(event) {
-     placeMarker(event.latLng);
-  });
-
   function placeMarker(location) {
       var imageGrn = "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
       var imageRed = "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
@@ -274,6 +237,44 @@ function initMap() {
       allCircles.push(circle);
 
   }
+
+  // Add buttons
+  // Create the DIV to hold the control and call the CenterControl()
+  // constructor passing in this DIV.
+  var centerControlDiv = document.createElement('div');
+  var centerControlGreen = new CenterControlBtnGreen(centerControlDiv, map, placeMarker);
+  var centerControlRed = new CenterControlBtnRed(centerControlDiv, map, placeMarker);
+  var centerControlUndo = new CenterControlBtnUndo(centerControlDiv, map);
+  var centerControlLocate = new CenterControlBtnLocate(centerControlDiv, map);
+
+  centerControlDiv.index = 1;
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log("HEY");
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      // infoWindow.setPosition(pos);
+      // infoWindow.setContent('Location found.');
+      map.setCenter(pos);
+    }, function() {
+      // handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    // DO NOTHING LMFAO
+  }
+
+  // does this work
+  google.maps.event.addListener(map, 'click', function(event) {
+     placeMarker(event.latLng);
+  });
+
 
 
 }
