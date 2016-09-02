@@ -7,6 +7,43 @@ var allCircles = [];
 var loc_marker = null;
 
 
+  function placeMarker(location) {
+      var imageGrn = "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+      var imageRed = "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+      var image = null;
+      var fillColor = null;
+      if (drawColor == "Green") {
+        image = imageGrn;
+        fillColor = "#00FF00";
+      } else {
+        image = imageRed;
+        fillColor = "#FF0000";
+      } 
+
+      var marker = new google.maps.Marker({
+          position: location, 
+          map: map,
+          icon: image
+      });
+
+      allMarkers.push(marker);
+
+      var circle = new google.maps.Circle({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.0,
+        strokeWeight: 0,
+        fillColor: fillColor,
+        fillOpacity: 0.2,
+        map: map,
+        center: location,
+        radius: 200,
+        clickable: false
+      });
+
+      allCircles.push(circle);
+
+  }
+
 // ============== CREATING BUTTONS ============
 
 // function to create toggle green btn
@@ -237,42 +274,6 @@ function initMap() {
      placeMarker(event.latLng);
   });
 
-  function placeMarker(location) {
-      var imageGrn = "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
-      var imageRed = "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
-      var image = null;
-      var fillColor = null;
-      if (drawColor == "Green") {
-        image = imageGrn;
-        fillColor = "#00FF00";
-      } else {
-        image = imageRed;
-        fillColor = "#FF0000";
-      } 
-
-      var marker = new google.maps.Marker({
-          position: location, 
-          map: map,
-          icon: image
-      });
-
-      allMarkers.push(marker);
-
-      var circle = new google.maps.Circle({
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.0,
-        strokeWeight: 0,
-        fillColor: fillColor,
-        fillOpacity: 0.2,
-        map: map,
-        center: location,
-        radius: 200,
-        clickable: false
-      });
-
-      allCircles.push(circle);
-
-  }
 
 
 }
